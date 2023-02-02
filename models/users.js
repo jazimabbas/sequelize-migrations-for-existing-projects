@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class RolePermissions extends Model {
+  class Users extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  RolePermissions.init(
+  Users.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,21 +19,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       role: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Roles",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "NO ACTION",
-      },
-      permission: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "permissions", // should be tablename
+          model: "roles",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -42,10 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "RolePermissions",
-      tableName: "role_permissions",
+      modelName: "Users",
+      tableName: "users",
       timestamps: false,
     }
   );
-  return RolePermissions;
+  return Users;
 };
